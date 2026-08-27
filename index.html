@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>A Little Surprise For You ❤️</title>
+  <meta name="description" content="A custom interactive love quest experience crafted with love.">
+  
+  <!-- CSS Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Ambient Background Particle Canvas -->
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- Final Celebration Confetti/Hearts Canvas -->
+  <canvas id="celebration-canvas"></canvas>
+
+  <!-- Top Navigation / Progress Header -->
+  <header class="app-header" id="app-header">
+    <div class="logo-text">OUR STORY</div>
+    <div class="progress-pill">
+      <span class="heart-icon">♡</span>
+      <span id="level-counter-text">Level 1 / 6</span>
+    </div>
+  </header>
+
+  <!-- Hidden Easter Egg Trigger (Bottom-Left Star) -->
+  <div class="hidden-star-trigger" id="hidden-star-btn" title="✨">✦</div>
+
+  <!-- Hidden Easter Egg Modal -->
+  <div class="modal-overlay" id="easter-egg-modal">
+    <div class="modal-card">
+      <h3 class="level-title" id="easter-egg-title">✨ Secret Note ✨</h3>
+      <p class="level-subtitle" id="easter-egg-message" style="white-space: pre-line; margin-bottom: 1.5rem;"></p>
+      <button class="btn-primary" id="close-easter-egg-btn">Close Secret 💖</button>
+    </div>
+  </div>
+
+  <!-- Floating Audio Player Button -->
+  <button class="audio-control-btn" id="audio-toggle-btn" aria-label="Toggle background music">
+    <span class="music-waves">
+      <span></span><span></span><span></span>
+    </span>
+    <span id="audio-btn-text">🎵 Play Music</span>
+  </button>
+
+  <!-- Background Audio Element -->
+  <audio id="bg-audio" loop preload="auto"></audio>
+
+  <!-- Main Application Wrapper -->
+  <main id="app-wrapper">
+
+    <!-- ====================================================================
+         LEVEL 0 — LANDING / INTRO
+         ==================================================================== -->
+    <section class="level-container active" id="level-0">
+      <div class="glass-card" style="text-align: center;">
+        <div class="intro-glow-heart">❤️</div>
+        <div class="typewriter-container">
+          <p class="typewriter-text" id="intro-typewriter-target"></p>
+        </div>
+        <button class="btn-primary" id="start-quest-btn" style="opacity: 0; pointer-events: none; transition: opacity 0.8s ease;">
+          ENTER MY LITTLE WORLD →
+        </button>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         LEVEL 1 — ONE SIMPLE QUESTION
+         ==================================================================== -->
+    <section class="level-container" id="level-1">
+      <div class="glass-card">
+        <h2 class="level-title">Okay... let's start with something easy 👀</h2>
+        <p class="level-subtitle" id="level1-question-text">Ninne njan entha vilikkendath?</p>
+        
+        <div class="options-grid" id="level1-options-container">
+          <!-- Populated dynamically via config.js -->
+        </div>
+
+        <div class="feedback-box" id="level1-feedback"></div>
+
+        <div style="text-align: center;">
+          <button class="btn-primary" id="level1-continue-btn" style="display: none;">
+            Continue →
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         LEVEL 2 — DISTANCE
+         ==================================================================== -->
+    <section class="level-container" id="level-2">
+      <div class="glass-card">
+        <h2 class="level-title" id="distance-title">Between Us 💫</h2>
+        
+        <div class="distance-visual-card">
+          <div class="location-labels">
+            <div class="location-badge" id="badge-india">INDIA 🇮🇳</div>
+            <div class="location-badge" id="badge-dubai">DUBAI 🇦🇪</div>
+          </div>
+          
+          <div class="distance-canvas-wrapper">
+            <canvas id="distance-canvas"></canvas>
+          </div>
+
+          <div class="distance-text-block">
+            <p class="distance-line" id="dist-line-1"></p>
+            <p class="distance-line highlight" id="dist-line-2"></p>
+            <p class="distance-line" id="dist-line-3"></p>
+          </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 2rem;">
+          <button class="btn-primary" id="level2-continue-btn" style="display: none;">
+            Continue →
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         LEVEL 3 — MEMORY / CONVERSATION QUIZ
+         ==================================================================== -->
+    <section class="level-container" id="level-3">
+      <div class="glass-card">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+          <span style="font-size: 0.85rem; color: var(--accent-pink); font-weight: 600;" id="quiz-progress-text">Question 1 of 3</span>
+        </div>
+
+        <h2 class="level-title" id="quiz-question-title">Quiz Question</h2>
+        
+        <div class="options-grid" id="quiz-options-container">
+          <!-- Dynamic quiz options -->
+        </div>
+
+        <div class="feedback-box" id="quiz-feedback"></div>
+
+        <div style="text-align: center;">
+          <button class="btn-primary" id="quiz-next-btn" style="display: none;">
+            Next Question →
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         LEVEL 4 — SECRET / HACKER MOMENT
+         ==================================================================== -->
+    <section class="level-container" id="level-4">
+      <div class="glass-card">
+        <h2 class="level-title">System Protocol 👨‍💻</h2>
+        
+        <div class="terminal-window">
+          <div class="terminal-header">
+            <span class="terminal-dot dot-red"></span>
+            <span class="terminal-dot dot-yellow"></span>
+            <span class="terminal-dot dot-green"></span>
+            <span class="terminal-title">surprise_v1.0.sh</span>
+          </div>
+          <div class="terminal-body" id="terminal-body">
+            <!-- Terminal console lines typed here -->
+          </div>
+        </div>
+
+        <p class="level-subtitle" id="terminal-reveal-text" style="display: none; font-weight: 600; color: var(--accent-pink);"></p>
+
+        <div style="text-align: center;">
+          <button class="btn-primary" id="level4-continue-btn" style="display: none;">
+            Continue →
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         LEVEL 5 — THE EMOTIONAL MOMENT
+         ==================================================================== -->
+    <section class="level-container" id="level-5">
+      <div class="glass-card" style="padding-top: 3rem; padding-bottom: 3rem;">
+        <div class="emotional-text-container" id="emotional-text-box">
+          <!-- Staggered line-by-line emotional lines -->
+        </div>
+
+        <div style="text-align: center; margin-top: 2.5rem;">
+          <button class="btn-primary" id="level5-continue-btn" style="display: none;">
+            One Last Surprise →
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         LEVEL 6 — FINAL SURPRISE
+         ==================================================================== -->
+    <section class="level-container" id="level-6">
+      <div class="glass-card" style="text-align: center;">
+        <div class="granted-badge">ACCESS GRANTED ❤️</div>
+        
+        <div class="final-letter-card">
+          <p id="final-message-target"></p>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 1rem; align-items: center;">
+          <button class="btn-primary" id="final-music-play-btn">
+            🎵 Play Music & Celebrate 🎉
+          </button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Central Configuration File -->
+  <script src="js/config.js"></script>
+
+  <!-- Core Application Logic -->
+  <script src="js/app.js"></script>
+</body>
+</html>
